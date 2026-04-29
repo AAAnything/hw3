@@ -116,7 +116,7 @@ python Deepseek_RAG_System.py
 
 python htmlVersion.py
 
-4. 等待终端输出 Running on local URL: http://127.0.0.1:7860，在浏览器中打开该地址即可访问。
+4. 等待终端输出 Running on local URL: http://127.0.0.1:7860 ，在浏览器中打开该地址即可访问。
 
 5. 在输入框中输入问题，点击“开始对比测试”按钮，即可在三个面板中查看结果。
 
