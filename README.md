@@ -65,7 +65,7 @@ python -c "from sentence_transformers import SentenceTransformer; SentenceTransf
 
 3. 在终端中运行：
 
-bash
+
 python Deepseek_RAG_System.py
 
 4. 在 请输入您的问题: 提示符后输入问题，按回车获得回答。
@@ -114,7 +114,6 @@ python Deepseek_RAG_System.py
 
 3. 在终端中运行：
 
-bash
 python htmlVersion.py
 
 4. 等待终端输出 Running on local URL: http://127.0.0.1:7860，在浏览器中打开该地址即可访问。
