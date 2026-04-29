@@ -130,12 +130,21 @@ python htmlVersion.py
 项目文件结构
 
 2453601_牛奕洁_RAG作业/
+
 ├── Deepseek_RAG_System.py      # 基础命令行版主程序
+
 ├── htmlVersion.py              # 进阶Gradio网页版主程序
+
 ├── requirements.txt            # 项目依赖列表
+
 ├── README.md                   # 项目说明文档（本文件）
+
 ├── 实验报告.pdf                # 最终提交的实验报告
+
 ├── paper1.txt                  # 知识库文档1
+
 ├── paper2.txt                  # 知识库文档2
+
 ├── paper3.txt                  # 知识库文档3
+
 └── paper4.pdf                  # 知识库文档4 (用于演示多格式支持)
