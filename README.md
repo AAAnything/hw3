@@ -56,7 +56,7 @@ model = SentenceTransformer('BAAI/bge-small-zh')
             )
     print(f"成功加载 {len(FILES)} 份文档，书架已就绪！")
 
-## 3. 运行指南
+## 3. 运行指南——检索 + LLM生成
 ### 3.1 启动命令
 在终端执行 Python 脚本：
 
@@ -71,9 +71,9 @@ python main.py
 <img width="436" height="185" alt="image" src="https://github.com/user-attachments/assets/07408499-1090-4939-95db-05c88b41e1a1" />
 
 
-## 4. 运行截图示例
+### 3.3  运行截图示例
 
-4.1 场景一：基础知识问答
+#### 3.3.1 场景一：基础知识问答
 问题：DeepSeek 的核心创新点是什么？
 
 结果：显示相关论文片段。
@@ -82,7 +82,7 @@ python main.py
 
 
 
-4.2 场景二：多文档交叉检索
+#### 3.3.2 场景二：多文档交叉检索
 问题：对比现有参考内容中对教育变革看法的异同。
 
 结果：命中多个文件的片段。
@@ -91,9 +91,11 @@ python main.py
 <img width="1734" height="748" alt="image" src="https://github.com/user-attachments/assets/8226053d-207d-45f3-ad9b-89d7fee71fe7" />
 
 
-4.3 场景三：无法回答的情况（幻觉控制）
+#### 3.3.3 场景三：无法回答的情况（幻觉控制）
 问题：今天的天气怎么样？
 
 结果：系统虽检索到语义最接近的片段，但 LLM 准确判断出信息不匹配，输出预设的拒答语，有效防止了 AI 幻觉。
 
 <img width="1734" height="520" alt="image" src="https://github.com/user-attachments/assets/9046923c-2aef-45a8-8c17-756833dff966" />
+
+## 4.针对同一问题的多种结果对比及网页化
