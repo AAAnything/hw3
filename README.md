@@ -76,22 +76,24 @@ python main.py
 4.1 场景一：基础知识问答
 问题：DeepSeek 的核心创新点是什么？
 
-检索结果：显示相关论文片段。
+结果：显示相关论文片段。
 
-生成答案：DeepSeek 回答的详细内容。
+<img width="1706" height="600" alt="image" src="https://github.com/user-attachments/assets/b8d88c23-cb83-4128-afb6-419268ca35f4" />
+
 
 
 4.2 场景二：多文档交叉检索
-问题：对比这几篇论文对教育变革的看法。
+问题：对比现有参考内容中对教育变革看法的异同。
 
-检索结果：命中多个文件的片段。
+结果：命中多个文件的片段。
 
-生成答案：系统综合各来源给出的综述。
+
+<img width="1734" height="748" alt="image" src="https://github.com/user-attachments/assets/8226053d-207d-45f3-ad9b-89d7fee71fe7" />
 
 
 4.3 场景三：无法回答的情况（幻觉控制）
 问题：今天的天气怎么样？
 
-检索结果：无相关文档。
+结果：系统虽检索到语义最接近的片段，但 LLM 准确判断出信息不匹配，输出预设的拒答语，有效防止了 AI 幻觉。
 
-生成答案：系统提示“根据现有资料无法回答”。
+<img width="1734" height="520" alt="image" src="https://github.com/user-attachments/assets/9046923c-2aef-45a8-8c17-756833dff966" />
