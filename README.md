@@ -17,11 +17,13 @@ requirements.txt 文件内容应包括：
 
 <img width="1404" height="1006" alt="image" src="https://github.com/user-attachments/assets/219e9896-c343-4f5b-aa68-05e01038fbef" />
 
-做作业用的钱其实远远不到1元，但是这个是最小充值金额。
+
 
 ### 1.3 embedding model下载
 本项目使用 BAAI/bge-small-zh 作为嵌入模型。首次运行时，程序会自动从 Hugging Face Hub 下载。若网络不佳，可执行以下命令手动下载并缓存：
+
 python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('BAAI/bge-small-zh')"
+
 下载成功后，模型将缓存在本地 ~/.cache/huggingface/ 目录下。
 
 ## 2.知识库准备说明
