@@ -3,68 +3,63 @@
 ## 1. 环境配置
 ### 1.1 在命令行执行安装依赖
 <img width="459" height="38" alt="image" src="https://github.com/user-attachments/assets/ead18e29-07ea-470b-9015-f19cf188ff95" />
+requirements.txt 文件内容应包括：
+<img width="503" height="567" alt="image" src="https://github.com/user-attachments/assets/6b4e0c6f-9445-461e-968e-14139f4b765d" />
+
 
 ### 1.2 设置API key
-这次作业我采用了www.platform.deepseek.com平台的付费服务。
-创建一个新的API key，复制保存。
+1. 访问 DeepSeek Platform 注册/登录账号。
+
+2. 进入“API Keys”页面，创建一个新的 API Key 并复制保存。
+
+3. 注意：DeepSeek API 需要先充值（最低1元）才能调用。本次实验消耗极少，远低于充值额度。
 <img width="2558" height="814" alt="image" src="https://github.com/user-attachments/assets/fd3a7357-68df-47ed-823f-3bc75d841783" />
 
-充值1元来做作业。
 <img width="1404" height="1006" alt="image" src="https://github.com/user-attachments/assets/219e9896-c343-4f5b-aa68-05e01038fbef" />
 
 做作业用的钱其实远远不到1元，但是这个是最小充值金额。
 
 ### 1.3 embedding model下载
-模型名称：BAAI/bge-small-zh (北京智源人工智能研究院开发的中文小模型)。
-下载库：使用 sentence-transformers 库。
-下载触发代码：
-model = SentenceTransformer('BAAI/bge-small-zh')
-
-下载机制：
-自动检索：当程序运行到这一行时，会自动连接到 Hugging Face Hub 服务器。
-本地缓存：模型文件会自动下载到你电脑的默认缓存文件夹（通常在 Windows 的 C:\Users\用户名\.cache\huggingface\hub）。
-静默加载：一旦下载过一次，下次运行代码时会直接从本地硬盘读取，不再需要联网下载。
+本项目使用 BAAI/bge-small-zh 作为嵌入模型。首次运行时，程序会自动从 Hugging Face Hub 下载。若网络不佳，可执行以下命令手动下载并缓存：
+python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('BAAI/bge-small-zh')"
+下载成功后，模型将缓存在本地 ~/.cache/huggingface/ 目录下。
 
 ## 2.知识库准备说明
 ### 2.1 使用的论文
-我选取了中国知网上引用次数最多的文章，以此保证论文权威性。
+本实验选取了三篇关于 DeepSeek 的中文学术论文作为知识库，以保证信息的权威性。
 ① 魏钰明, 贾开, 曾润喜, 等. DeepSeek突破效应下的人工智能创新发展与治理变革 [J]. 电子政务, 2025-02-26.
 ② 邓建鹏, 赵治松. DeepSeek的破局与变局：论生成式人工智能的监管方向 [J]. 新疆师范大学学报(哲学社会科学版), 2025-02-14.
 ③ 郭蕾蕾. 生成式人工智能驱动教育变革：机制、风险及应对——以DeepSeek为例 [J]. 重庆高教研究, 2025-03-10.
-
+(扩展版中会增加一个 paper4.pdf 来演示多格式支持)
 ### 2.2 切分策略
-程序采用 滑动窗口（Sliding Window） 机制进行文本切分，以保证上下文的连续性：
-分片大小 (Chunk Size): 450 字符
-重叠大小 (Overlap): 50 字符
-步长: 400 字符
+为了保证语义完整并避免关键信息在切分边界处丢失，程序采用滑动窗口机制进行文本切分：
 
-相关代码：
-        # 策略：滑动窗口切分 (Chunk Size: 450, Overlap: 50)
-        
-        chunks = [text[i:i + 450] for i in range(0, len(text), 400)]
-        
-        for i, chunk in enumerate(chunks):
-            vector = model.encode(chunk).tolist()
-            collection.add(
-                ids=[f"{file_name}_{i}"],
-                embeddings=[vector],
-                documents=[chunk],
-                metadatas=[{"source": file_name}]
-            )
-    print(f"成功加载 {len(FILES)} 份文档，书架已就绪！")
+分片大小 (Chunk Size)：450 字符
+
+步长 (Step)：400 字符
+
+重叠大小 (Overlap)：50 字符 (由 chunk_size - step 计算得出)
+
+这种策略确保了相邻文档块之间有50字符的重叠，维持了上下文的连贯性。
 
 ## 3. 运行指南
 ### 3.1 基础命令行版 (Task 3.1.2)
-首先需要确认已经执行了第一部分的环境配置。
-将Deepseek_RAG_System.py中的MY_API_KEY改成自己的密钥。
-在终端执行 Python 脚本：
+此版本实现了 RAG 的核心功能，并通过命令行进行交互。
 
-Bash
+步骤：
+
+1. 打开 Deepseek_RAG_System.py，将代码开头的 MY_API_KEY 替换为你自己的密钥。
+
+2. 确保 paper1.txt 等知识库文件在同一目录下。
+
+3. 在终端中运行：
+
+bash
 python Deepseek_RAG_System.py
-这一部分采用 CLI 命令行交互界面。
-启动后，系统会自动完成文档向量化并存入内存数据库。
-在 请输入您的问题: 提示符后输入提问内容。
-输入 quit 或 exit 即可退出系统。
+
+4. 在 请输入您的问题: 提示符后输入问题，按回车获得回答。
+
+5. 输入 quit 或 exit 退出程序。
 <img width="436" height="185" alt="image" src="https://github.com/user-attachments/assets/07408499-1090-4939-95db-05c88b41e1a1" />
 
 
@@ -94,14 +89,38 @@ python Deepseek_RAG_System.py
 <img width="1734" height="520" alt="image" src="https://github.com/user-attachments/assets/9046923c-2aef-45a8-8c17-756833dff966" />
 
 ### 3.2 进阶网页对比版 (Task 3.1.3 & 3.1.4)
-打开 htmlVersion.py，将第 9 行的 MY_API_KEY 替换为您自己的 DeepSeek API Key。
-由于模型文件较大且访问 Hugging Face 可能受限，系统已配置离线加载模式。若您的环境中未下载模型，请先开启代理并注释掉代码顶部的 os.environ['TRANSFORMERS_OFFLINE'] = '1' 后运行一次。
-启动命令：python htmlVersion.py
-程序启动后，在浏览器访问 (http://127.0.0.1:7860) 即可进入 RAG 对比实验平台。
+此版本使用 Gradio 构建了一个 Web 界面，可同时展示“仅 LLM”、“仅检索”、“RAG”三种模式的输出结果，并实现了缓存机制和PDF支持。
+
+步骤：
+
+1. 打开 htmlVersion.py，将 MY_API_KEY 替换为你自己的密钥。
+
+2. 首次运行或HF网络不佳时：请注释掉代码开头的强制离线配置 (# os.environ['TRANSFORMERS_OFFLINE'] = '1')，开启代理后运行一次以完成模型下载。后续使用可恢复离线配置以加速启动。
+
+3. 在终端中运行：
+
+bash
+python htmlVersion.py
+
+4. 等待终端输出 Running on local URL: http://127.0.0.1:7860，在浏览器中打开该地址即可访问。
+
+5. 在输入框中输入问题，点击“开始对比测试”按钮，即可在三个面板中查看结果。
+
+运行截图示例：
 <img width="865" height="484" alt="image" src="https://github.com/user-attachments/assets/75ad05c9-5d30-42a8-b17e-ed55f3194369" />
 
-
-#### 3.2.1  运行截图示例
 <img width="865" height="472" alt="image" src="https://github.com/user-attachments/assets/3ad474b2-665a-46b1-99a6-2e75c245d63a" />
 
 
+项目文件结构
+
+2453601_牛奕洁_RAG作业/
+├── Deepseek_RAG_System.py      # 基础命令行版主程序
+├── htmlVersion.py              # 进阶Gradio网页版主程序
+├── requirements.txt            # 项目依赖列表
+├── README.md                   # 项目说明文档（本文件）
+├── 实验报告.pdf                # 最终提交的实验报告
+├── paper1.txt                  # 知识库文档1
+├── paper2.txt                  # 知识库文档2
+├── paper3.txt                  # 知识库文档3
+└── paper4.pdf                  # 知识库文档4 (用于演示多格式支持)
