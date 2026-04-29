@@ -1,13 +1,10 @@
 # HCI作业 3：Lab 2 基于 DeepSeek 的 RAG 信息检索系统
 
 ## 1. 环境配置
-### 1.1 将需要的依赖写入requirements.txt
-<img width="1644" height="1267" alt="image" src="https://github.com/user-attachments/assets/5763a9ea-89f8-4402-920b-27440a4c3273" />
-
-### 1.2在命令行执行安装依赖
+### 1.1 在命令行执行安装依赖
 <img width="459" height="38" alt="image" src="https://github.com/user-attachments/assets/ead18e29-07ea-470b-9015-f19cf188ff95" />
 
-### 1.3设置API key
+### 1.2 设置API key
 这次作业我采用了www.platform.deepseek.com平台的付费服务。
 创建一个新的API key，复制保存。
 <img width="2558" height="814" alt="image" src="https://github.com/user-attachments/assets/fd3a7357-68df-47ed-823f-3bc75d841783" />
@@ -17,7 +14,7 @@
 
 做作业用的钱其实远远不到1元，但是这个是最小充值金额。
 
-### 1.4 embedding model下载
+### 1.3 embedding model下载
 模型名称：BAAI/bge-small-zh (北京智源人工智能研究院开发的中文小模型)。
 下载库：使用 sentence-transformers 库。
 下载触发代码：
