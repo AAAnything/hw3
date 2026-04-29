@@ -28,12 +28,19 @@ python -c "from sentence_transformers import SentenceTransformer; SentenceTransf
 
 ## 2.知识库准备说明
 ### 2.1 使用的论文
+
 本实验选取了三篇关于 DeepSeek 的中文学术论文作为知识库，以保证信息的权威性。
+
 ① 魏钰明, 贾开, 曾润喜, 等. DeepSeek突破效应下的人工智能创新发展与治理变革 [J]. 电子政务, 2025-02-26.
+
 ② 邓建鹏, 赵治松. DeepSeek的破局与变局：论生成式人工智能的监管方向 [J]. 新疆师范大学学报(哲学社会科学版), 2025-02-14.
+
 ③ 郭蕾蕾. 生成式人工智能驱动教育变革：机制、风险及应对——以DeepSeek为例 [J]. 重庆高教研究, 2025-03-10.
+
 (扩展版中会增加一个 paper4.pdf 来演示多格式支持)
+
 ### 2.2 切分策略
+
 为了保证语义完整并避免关键信息在切分边界处丢失，程序采用滑动窗口机制进行文本切分：
 
 分片大小 (Chunk Size)：450 字符
@@ -45,7 +52,9 @@ python -c "from sentence_transformers import SentenceTransformer; SentenceTransf
 这种策略确保了相邻文档块之间有50字符的重叠，维持了上下文的连贯性。
 
 ## 3. 运行指南
+
 ### 3.1 基础命令行版 (Task 3.1.2)
+
 此版本实现了 RAG 的核心功能，并通过命令行进行交互。
 
 步骤：
@@ -62,10 +71,12 @@ python Deepseek_RAG_System.py
 4. 在 请输入您的问题: 提示符后输入问题，按回车获得回答。
 
 5. 输入 quit 或 exit 退出程序。
+
 <img width="436" height="185" alt="image" src="https://github.com/user-attachments/assets/07408499-1090-4939-95db-05c88b41e1a1" />
 
 
 #### 3.1.1 场景一：基础知识问答
+
 问题：DeepSeek 的核心创新点是什么？
 
 结果：显示相关论文片段。
@@ -75,15 +86,16 @@ python Deepseek_RAG_System.py
 
 
 #### 3.1.2 场景二：多文档交叉检索
+
 问题：对比现有参考内容中对教育变革看法的异同。
 
 结果：命中多个文件的片段。
-
 
 <img width="1734" height="748" alt="image" src="https://github.com/user-attachments/assets/8226053d-207d-45f3-ad9b-89d7fee71fe7" />
 
 
 #### 3.1.3 场景三：无法回答的情况（幻觉控制）
+
 问题：今天的天气怎么样？
 
 结果：系统虽检索到语义最接近的片段，但 LLM 准确判断出信息不匹配，输出预设的拒答语，有效防止了 AI 幻觉。
@@ -91,6 +103,7 @@ python Deepseek_RAG_System.py
 <img width="1734" height="520" alt="image" src="https://github.com/user-attachments/assets/9046923c-2aef-45a8-8c17-756833dff966" />
 
 ### 3.2 进阶网页对比版 (Task 3.1.3 & 3.1.4)
+
 此版本使用 Gradio 构建了一个 Web 界面，可同时展示“仅 LLM”、“仅检索”、“RAG”三种模式的输出结果，并实现了缓存机制和PDF支持。
 
 步骤：
@@ -109,6 +122,7 @@ python htmlVersion.py
 5. 在输入框中输入问题，点击“开始对比测试”按钮，即可在三个面板中查看结果。
 
 运行截图示例：
+
 <img width="865" height="484" alt="image" src="https://github.com/user-attachments/assets/75ad05c9-5d30-42a8-b17e-ed55f3194369" />
 
 <img width="865" height="472" alt="image" src="https://github.com/user-attachments/assets/3ad474b2-665a-46b1-99a6-2e75c245d63a" />
